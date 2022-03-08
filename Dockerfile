@@ -8,7 +8,7 @@ RUN apt-get update && \
 apt-get install -y libglu1 xvfb libxcursor1 tzdata iproute2 ca-certificates curl openssl
 
 
-run         useradd -m -d /home/container container
+RUN         useradd -m -d /home/container container
 USER        container
 ENV         USER=container HOME=/home/container
 WORKDIR     /home/container
