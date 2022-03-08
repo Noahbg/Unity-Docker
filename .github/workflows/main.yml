@@ -34,7 +34,8 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64 # remove the amr64 tag if it doesn't work your game for arm64
           push: true
-          tags: "<dockerusername>/<dockerrepo>:<tag>"
+          tags: "quintenqvdq/pterodactyl_images:test"
+          # tags: "<dockerusername>/<dockerrepo>:<tag>"
           # dockerusername = just your docker username
           # dockerrepo = is the name off the repo
           # tag can be the game version or just latest
