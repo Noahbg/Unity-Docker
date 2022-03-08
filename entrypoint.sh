@@ -1,3 +1,13 @@
 #!/bin/bash
-chmod +x /home/container/linuxBuild.x86_64
-xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' /home/container/linuxBuild.x86_64 -batchmode -nographics
+
+cd /home/container
+
+INTERNAL_IP=$(ip route get 1 | awk '{print $NF;exit}')
+export INTERNAL_IP
+
+# Replace Startup Variables
+MODIFIED_STARTUP=$(echo -e ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
+echo ":/home/container$ ${MODIFIED_STARTUP}"
+
+# Run the Server
+eval ${MODIFIED_STARTUP}

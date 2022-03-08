@@ -1,0 +1,41 @@
+name: build image
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  push:
+    name: "Liverookie:{{ matrix.tag }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tag:
+          - mygame # game name can be anything 
+    steps:
+      - uses: actions/checkout@v2
+      # Setup QEMU for ARM64 Build
+      - uses: docker/setup-qemu-action@v1
+      - uses: docker/setup-buildx-action@v1
+        with:
+          version: "v0.5.1"
+          buildkitd-flags: --debug
+      - uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USER }} # add "DOCKER_USER" this to this repo secrets what must as value has to be your docker username
+          password: ${{ secrets.DOCKER_PASSWORD }} # add "DOCKER_PASSWORD" this to this repo secrets with the value your docker hub pw
+      - uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64 # remove the amr64 tag if it doesn't work your game for arm64
+          push: true
+          # tags: "<dockerusername>/<dockerrepo>:<tag>"
+          
+          # dockerusername = just your docker username , and uncoment the #tags thing so it becomes blue
+          # dockerrepo = is the name off the repo
+          # tag can be the game version or just latest
