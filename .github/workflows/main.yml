@@ -1,5 +1,3 @@
-#triger
-
 name: build image
 on:
   workflow_dispatch:
@@ -9,8 +7,6 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - discord/nodejs16-python2.7
 jobs:
   push:
     name: "Liverookie:{{ matrix.tag }}"
@@ -19,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         tag:
-          - mygame
+          - mygame # game name can be anything 
     steps:
       - uses: actions/checkout@v2
       # Setup QEMU for ARM64 Build
@@ -30,12 +26,15 @@ jobs:
           buildkitd-flags: --debug
       - uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_USER }} # add "DOCKER_USER" this to this repo secrets what must as value has to be your docker username
+          password: ${{ secrets.DOCKER_PASSWORD }} # add "DOCKER_PASSWORD" this to this repo secrets with the value your docker hub pw
       - uses: docker/build-push-action@v2
         with:
           context: ./
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64,linux/arm64 # remove the amr64 tag if it doesn't work your game for arm64
           push: true
-          tags: "quintenqvdq/pterodactyl_images:t"
+          tags: "<dockerusername>/<dockerrepo>:<tag>"
+          # dockerusername = just your docker username
+          # dockerrepo = is the name off the repo
+          # tag can be the game version or just latest
