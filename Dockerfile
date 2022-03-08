@@ -1,5 +1,5 @@
 FROM ubuntu:xenial
-MAINTAINER Aryan <tiwariaryan035@gmail.com>
+MAINTAINER Aryan <liveerookie@gmail.com>
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG DOCKER_VERSION=17.06.0-ce
