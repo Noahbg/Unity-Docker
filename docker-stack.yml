@@ -1,5 +1,0 @@
-server:
-  image: bobmoff/cocktail-server
-  ports:
-     - "7777:7777"
-     - "7777:7777/udp"

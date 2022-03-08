@@ -1,2 +1,0 @@
-# gameserver-docker
-idk

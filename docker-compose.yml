@@ -1,10 +1,19 @@
-version: '2'
+version: '3.1'
 services:
 
-  server:
-    image: bobmoff/cocktail-server
+  unity:
+    build:
+      context: unity/
+    image: unity:latest
+    restart: unless-stopped
     ports:
-     - "7777:7777"
-     - "7777:7777/udp"
-    volumes:
-      - ./shared:/shared
+      - "26000:26000/udp"
+      - "26001:26001/udp"
+    networks:
+      - web
+    #volumes:
+    #  - ./nginx/http.conf:/etc/nginx/conf.d/http.conf:ro
+
+networks:
+  web:
+    driver: bridge
